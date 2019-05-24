@@ -25,8 +25,8 @@ this fragment is a Event Handler.
 we must specifies the generic which extends EventObject.
 ```
 public class TestFragment extends BaseEventFragment<WxEvent> {
-    public TestFragment(Lifecycle lifecycle) {
-        super(lifecycle);
+    public TestFragment(Context context,Lifecycle lifecycle) {
+        super(context,lifecycle);
     }
 
     @Override
