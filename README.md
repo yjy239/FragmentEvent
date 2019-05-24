@@ -51,6 +51,8 @@ we can register eventbus:
 FragmentEvent.getDefault().register(this, WxEvent.class);
 ```
 
+Pay a Attention! the LifeCyle of Event Handler will be bound to Context(Application/Activity/Fragment)
+
 Instead of:
 ```
 EventBus.getDefault().register(this);
