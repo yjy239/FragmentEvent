@@ -1,5 +1,6 @@
 package com.yjy.fragmentevent.util;
 
+import android.content.Context;
 import android.os.Looper;
 import android.support.annotation.NonNull;
 
@@ -69,11 +70,11 @@ public class Utils {
 
     }
 
-    public static <T extends EventFragment> T getEventFragment(Class<T> eventHandlerClass, Lifecycle lifecycle){
+    public static <T extends EventFragment> T getEventFragment(Class<T> eventHandlerClass, Context context,Lifecycle lifecycle){
         T fragment = null;
         try {
-            Constructor constructor = eventHandlerClass.getConstructor(Lifecycle.class);
-            fragment = (T) constructor.newInstance(lifecycle);
+            Constructor constructor = eventHandlerClass.getConstructor(Context.class,Lifecycle.class);
+            fragment = (T) constructor.newInstance(context,lifecycle);
         }catch (Exception e){
             throw new IllegalArgumentException("必须为EventObject指定泛型以及为BaseEventFragment指定泛型");
         }

@@ -1,8 +1,9 @@
 package com.yjy.fragmentevent;
 
 
-import com.yjy.eventbustest.EventFragment.info.EmptySubscriberInfo;
-import com.yjy.eventbustest.EventFragment.info.GenericSubscriberInfo;
+
+import com.yjy.fragmentevent.info.EmptySubscriberInfo;
+import com.yjy.fragmentevent.info.GenericSubscriberInfo;
 
 import org.greenrobot.eventbus.meta.SubscriberInfo;
 import org.greenrobot.eventbus.meta.SubscriberInfoIndex;

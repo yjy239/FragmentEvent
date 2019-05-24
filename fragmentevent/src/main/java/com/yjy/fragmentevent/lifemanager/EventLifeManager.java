@@ -79,7 +79,7 @@ public class EventLifeManager implements Handler.Callback{
     private <T extends EventFragment,K extends EventObject> T getApplicationManager(@NonNull Context context, Class<K> event) {
         // Either an application context or we're on a background thread.
         Class<T> clazz = Utils.getEventHandlerClass(event);
-        T fragment = Utils.getEventFragment(clazz,new ApplicationLifecycle());
+        T fragment = Utils.getEventFragment(clazz,context,new ApplicationLifecycle());
         return fragment;
     }
 
@@ -212,7 +212,7 @@ public class EventLifeManager implements Handler.Callback{
                                        boolean isParentVisible,Class<K> event) {
         RequestManagerFragment current = getRequestManagerFragment(fm, parentHint, isParentVisible);
         Class<T> clazz = Utils.getEventHandlerClass(event);
-        T fragment = Utils.getEventFragment(clazz,current.getLifeCycle());
+        T fragment = Utils.getEventFragment(clazz,context,current.getLifeCycle());
 
         return fragment;
     }
@@ -263,7 +263,7 @@ public class EventLifeManager implements Handler.Callback{
 //            current.setRequestManager(requestManager);
 //        }
         Class<T> clazz = Utils.getEventHandlerClass(event);
-        T fragment = Utils.getEventFragment(clazz,current.getLifeCycle());
+        T fragment = Utils.getEventFragment(clazz,context,current.getLifeCycle());
         return fragment;
     }
 
