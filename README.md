@@ -14,9 +14,19 @@ When we want to create a new Event，we must extends EventObject.
 At the same time, we must specifies the generic which extends BaseEventFragment
 ```
 public class WxEvent extends EventObject<TestFragment> {
+    public int code;
 
+    public WxEvent() {
+        this(CODE_SUCCESS);
+    }
+
+    public WxEvent(int code) {
+        this.code = code;
+    }
 }
 ```
+
+new class of Event must have a no parameter constructor.
 
 
 ### 2.BaseEventFragment
