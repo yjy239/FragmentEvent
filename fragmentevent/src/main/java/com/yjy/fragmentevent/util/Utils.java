@@ -54,7 +54,7 @@ public class Utils {
     public  static  <T extends EventFragment,K extends EventObject> Class<T> getEventHandlerClass(Class<K> event){
         Type result = null;
         try {
-            K object = event.newInstance();
+            K object = event.getDeclaredConstructor().newInstance();
             Type type = object.getClass().getGenericSuperclass();
             if(type instanceof ParameterizedType){
                 ParameterizedType p = (ParameterizedType)type;
@@ -71,6 +71,10 @@ public class Utils {
     }
 
     public static <T extends EventFragment> T getEventFragment(Class<T> eventHandlerClass, Context context,Lifecycle lifecycle){
+        if(eventHandlerClass == null){
+            throw new IllegalArgumentException("EventObject实例异常,必须包含无参构造函数");
+        }
+
         T fragment = null;
         try {
             Constructor constructor = eventHandlerClass.getConstructor(Context.class,Lifecycle.class);
