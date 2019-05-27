@@ -20,21 +20,40 @@ import org.greenrobot.eventbus.EventBus;
  */
 public class FragmentEvent {
 
-    private final EventLifeManager mManager;
 
-    private static class Holder{
-        private static FragmentEvent sInstance = new FragmentEvent();
-    }
+    private final  EventLifeManager mManager;
 
-    private FragmentEvent(){
-        EventBus.builder().addIndex(new GenericSubscriberInfoIndex()).installDefaultEventBus();
+
+    private volatile static FragmentEventBuilder BUILDER = builder().addIndex(new GenericSubscriberInfoIndex());
+    volatile static FragmentEvent sInstance;
+
+
+    FragmentEvent(){
         mManager = new EventLifeManager();
     }
 
-    public static FragmentEvent getDefault(){
-        return Holder.sInstance;
+
+    FragmentEvent(FragmentEventBuilder builder){
+        mManager = new EventLifeManager();
+        builder.installDefaultEventBus();
+
     }
 
+    public static FragmentEventBuilder builder() {
+        return new FragmentEventBuilder(EventBus.builder().addIndex(new GenericSubscriberInfoIndex()));
+    }
+
+
+    public static FragmentEvent getDefault(){
+        if(sInstance == null){
+            synchronized (FragmentEvent.class){
+                if(sInstance == null){
+                    sInstance = new FragmentEvent(BUILDER);
+                }
+            }
+        }
+        return sInstance;
+    }
 
 
     public EventLifeManager getLifeManager(){

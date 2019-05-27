@@ -1,5 +1,6 @@
 package com.yjy.fragmentevent.lifemanager;
 
+import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.NonNull;
@@ -19,6 +20,9 @@ import com.yjy.fragmentevent.util.Utils;
 public class EventFragment implements LifecycleListener{
     @SuppressWarnings("WeakerAccess")
     final Lifecycle mLifecycle;
+    private boolean isStop = false;
+    protected Context mContext;
+    private boolean isDestroy = false;
 
     private final Handler mainHandler = new Handler(Looper.getMainLooper());
 
@@ -28,8 +32,9 @@ public class EventFragment implements LifecycleListener{
             mLifecycle.addListener(EventFragment.this);
         }
     };
-    public EventFragment(@NonNull Lifecycle lifecycle){
+    public EventFragment(Context context, @NonNull Lifecycle lifecycle){
         this.mLifecycle = lifecycle;
+        this.mContext = context;
 
         if (Utils.isOnBackgroundThread()) {
             mainHandler.post(addSelfToLifecycle);
@@ -40,16 +45,24 @@ public class EventFragment implements LifecycleListener{
 
     @Override
     public void onStart() {
-
+        isStop = false;
     }
 
     @Override
     public void onStop() {
+        isStop = true;
+    }
 
+    public boolean isStop(){
+        return isStop;
+    }
+
+    public boolean isDestroy() {
+        return isDestroy;
     }
 
     @Override
     public void onDestroy() {
-
+        isDestroy = true;
     }
 }

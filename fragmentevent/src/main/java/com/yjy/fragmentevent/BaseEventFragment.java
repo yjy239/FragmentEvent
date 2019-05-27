@@ -1,5 +1,6 @@
 package com.yjy.fragmentevent;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 
 import com.yjy.fragmentevent.lifemanager.EventFragment;
@@ -22,9 +23,14 @@ import org.greenrobot.eventbus.ThreadMode;
 public abstract class BaseEventFragment<T> extends EventFragment {
 
 
-    public BaseEventFragment(@NonNull Lifecycle lifecycle){
-        super(lifecycle);
+    public BaseEventFragment(Context context,@NonNull Lifecycle lifecycle){
+        super(context,lifecycle);
         EventBus.getDefault().register(this);
+    }
+
+
+    public Context getContext(){
+        return mContext;
     }
 
 
