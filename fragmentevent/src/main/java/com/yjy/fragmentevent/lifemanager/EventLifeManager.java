@@ -20,6 +20,7 @@ import android.util.Log;
 
 
 import com.yjy.fragmentevent.EventObject;
+import com.yjy.fragmentevent.EventPool;
 import com.yjy.fragmentevent.util.Utils;
 
 import java.util.HashMap;
@@ -76,10 +77,16 @@ public class EventLifeManager implements Handler.Callback{
     }
 
     @NonNull
+    @SuppressWarnings("unchecked")
     private <T extends EventFragment,K extends EventObject> T getApplicationManager(@NonNull Context context, Class<K> event) {
         // Either an application context or we're on a background thread.
+        T fragment = (T)EventPool.getInstance().get(context,event);
+        if(fragment != null){
+            return fragment;
+        }
         Class<T> clazz = Utils.getEventHandlerClass(event);
-        T fragment = Utils.getEventFragment(clazz,context,new ApplicationLifecycle());
+        fragment = Utils.getEventFragment(clazz,context,new ApplicationLifecycle());
+        EventPool.getInstance().put(context,event,fragment);
         return fragment;
     }
 
@@ -203,17 +210,27 @@ public class EventLifeManager implements Handler.Callback{
         return current;
     }
 
-    @SuppressWarnings({"deprecation", "DeprecatedIsStillUsed"})
+    @SuppressWarnings({"deprecation", "DeprecatedIsStillUsed,unchecked"})
     @Deprecated
     @NonNull
     private <T extends  EventFragment,K extends EventObject> T fragmentGet(@NonNull Context context,
                                        @NonNull android.app.FragmentManager fm,
                                        @Nullable android.app.Fragment parentHint,
                                        boolean isParentVisible,Class<K> event) {
-        RequestManagerFragment current = getRequestManagerFragment(fm, parentHint, isParentVisible);
-        Class<T> clazz = Utils.getEventHandlerClass(event);
-        T fragment = Utils.getEventFragment(clazz,context,current.getLifeCycle());
 
+
+
+        RequestManagerFragment current = getRequestManagerFragment(fm, parentHint, isParentVisible);
+
+        //获取fragment中已经注册的对象
+        T fragment = (T)EventPool.getInstance().get(current,event);
+        if(fragment != null){
+            return fragment;
+        }
+
+        Class<T> clazz = Utils.getEventHandlerClass(event);
+        fragment = Utils.getEventFragment(clazz,context,current.getLifeCycle());
+        EventPool.getInstance().put(current,event,fragment);
         return fragment;
     }
 
@@ -245,6 +262,7 @@ public class EventLifeManager implements Handler.Callback{
         return current;
     }
 
+    @SuppressWarnings("unchecked")
     @NonNull
     private <T extends EventFragment,K extends EventObject> T supportFragmentGet(
             @NonNull Context context,
@@ -254,16 +272,16 @@ public class EventLifeManager implements Handler.Callback{
             Class<K> event) {
         SupportRequestManagerFragment current =
                 getSupportRequestManagerFragment(fm, parentHint, isParentVisible);
-//        RequestManager requestManager = current.getRequestManager();
-//        if (requestManager == null) {
-//            // TODO(b/27524013): Factor out this Glide.get() call.
-//            Glide glide = Glide.get(context);
-//            requestManager =
-//                    factory.build(current.getLifecycle(), context);
-//            current.setRequestManager(requestManager);
-//        }
+
+        T fragment = (T)EventPool.getInstance().get(current,event);
+        if(fragment != null){
+            return fragment;
+        }
+
+
         Class<T> clazz = Utils.getEventHandlerClass(event);
-        T fragment = Utils.getEventFragment(clazz,context,current.getLifeCycle());
+        fragment = Utils.getEventFragment(clazz,context,current.getLifeCycle());
+        EventPool.getInstance().put(current,event,fragment);
         return fragment;
     }
 

@@ -10,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.support.annotation.VisibleForTesting;
 import android.util.Log;
 
+import com.yjy.fragmentevent.EventPool;
 import com.yjy.fragmentevent.FragmentEvent;
 
 import java.util.Collections;
@@ -184,6 +185,9 @@ public class RequestManagerFragment extends Fragment {
     super.onDestroy();
     lifecycle.onDestroy();
     unregisterFragmentWithRoot();
+
+    //清空EventPool的数据
+    EventPool.getInstance().recycle(this);
   }
 
   @Override

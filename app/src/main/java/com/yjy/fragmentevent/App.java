@@ -2,6 +2,12 @@ package com.yjy.fragmentevent;
 
 import android.app.Application;
 
+import com.yjy.fragmentevent.Activity.AppEvent;
+import com.yjy.fragmentevent.app.WholeAppEvent;
+import com.yjy.fragmentevent.app.WholeEventFragment;
+
+import org.greenrobot.eventbus.EventBus;
+
 /**
  * <pre>
  *     @author : yjy
@@ -13,9 +19,14 @@ import android.app.Application;
  */
 public class App extends Application {
 
+
     @Override
     public void onCreate() {
         super.onCreate();
-        FragmentEvent.getDefault();
+        FragmentEvent.getDefault().register(this, WholeAppEvent.class);
+        WholeAppEvent e = new WholeAppEvent();
+        e.setCode(3);
+        EventBus.getDefault().post(e);
+
     }
 }

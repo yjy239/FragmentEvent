@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.NonNull;
 
+import com.yjy.fragmentevent.EventPool;
 import com.yjy.fragmentevent.util.Utils;
 
 

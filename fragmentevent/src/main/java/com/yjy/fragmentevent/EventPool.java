@@ -1,8 +1,10 @@
 package com.yjy.fragmentevent;
 
-import android.content.Context;
-import android.support.v4.app.Fragment;
+import android.annotation.SuppressLint;
 
+import com.yjy.fragmentevent.lifemanager.EventFragment;
+
+import java.util.HashMap;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -10,12 +12,12 @@ import java.util.concurrent.ConcurrentHashMap;
  *     @author : yjy
  *     @e-mail : yujunyu12@gmail.com
  *     @date   : 2019/05/24
- *     desc   :
+ *     desc   : 注意要保证一个Activity/Fragment/App一种组件只存在一个
  *     github:yjy239@gitub.com
  * </pre>
  */
-public class EventPool {
-    final ConcurrentHashMap<Object, BaseEventFragment> mEventPool = new ConcurrentHashMap<>();
+public class EventPool<T extends EventFragment,K extends Class<EventObject>>{
+    final ConcurrentHashMap<Object, HashMap<K,T>> mEventPool = new ConcurrentHashMap<>();
 
 
     private EventPool(){
@@ -27,16 +29,42 @@ public class EventPool {
     }
 
 
-    public static EventPool get(){
+    public static EventPool getInstance(){
         return Holder.sPool;
     }
 
-
-    public void put(Context context,BaseEventFragment eventFragment){
-        mEventPool.put(context,eventFragment);
+    public void put(Object o,K event, T eventFragment){
+        HashMap<K,T> map = getMap(o,event);
+        map.put(event,eventFragment);
+        mEventPool.put(o,map);
     }
 
-    public void put(Fragment fragment, BaseEventFragment eventFragment){
-        mEventPool.put(fragment,eventFragment);
+    private HashMap<K,T> getMap(Object o,K event){
+        HashMap<K,T> map = mEventPool.get(o);
+        if(map == null){
+            map = new HashMap<>();
+        }
+        return map;
+    }
+
+
+   public T get(Object o,K event){
+       HashMap<K,T> map = getMap(o,event);
+       return map.get(event);
+   }
+
+
+   public void recycle(Object o,K event){
+       HashMap<K,T> map = getMap(o,event);
+       map.remove(event);
+   }
+
+    public void recycle(Object o){
+        HashMap<K,T> map = mEventPool.get(o);
+        for(K fragment : map.keySet()){
+            map.remove(fragment);
+        }
+
+        mEventPool.remove(o);
     }
 }

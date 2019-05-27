@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 
 
+import com.yjy.fragmentevent.EventPool;
 import com.yjy.fragmentevent.FragmentEvent;
 
 import java.util.Collections;
@@ -162,6 +163,10 @@ public class SupportRequestManagerFragment extends Fragment {
     super.onDestroy();
     lifecycle.onDestroy();
     unregisterFragmentWithRoot();
+
+    //清空EventPool的数据
+    EventPool.getInstance().recycle(this);
+
   }
 
   @Override

@@ -28,6 +28,7 @@ public class SecondActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         FragmentEvent.getDefault().register(this, AppEvent.class);
+        FragmentEvent.getDefault().register(this, AppEvent.class);
 
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = manager.beginTransaction();
