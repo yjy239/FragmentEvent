@@ -16,7 +16,7 @@ public class WxEvent extends EventObject<TestFragment> {
     public int code;
 
     public WxEvent() {
-        this(CODE_SUCCESS);
+
     }
 
     public WxEvent(int code) {
