@@ -3,6 +3,8 @@ A EventBus Tools:it can constrain event in a Fragment（一个EventBus工具，�
 
 [![](https://jitpack.io/v/yjy239/FragmentEvent.svg)](https://jitpack.io/#yjy239/FragmentEvent)
 
+[中文文档](https://github.com/yjy239/FragmentEvent/wiki/%E4%BB%8B%E7%BB%8D%E4%B8%8E%E5%88%9D%E8%A1%B7)
+
 # How To Use It
 we must init FragmentEvent at First(Or before use EventBus)
 
