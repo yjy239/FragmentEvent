@@ -70,6 +70,10 @@ EventBus.getDefault().register(this);
 
 Additionally,we can use those register methods at the same time.(but register method of FragmentEvent must be used firstly in the whole App)
 
-
+# if we want to post event
+we can use this:
+```
+EventBus.getDefault().post(new WxEvent());
+```
 
 
