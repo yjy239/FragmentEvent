@@ -17,7 +17,8 @@ import java.util.concurrent.ConcurrentHashMap;
  * </pre>
  */
 public class EventPool<T extends EventFragment,K extends Class<EventObject>>{
-    final ConcurrentHashMap<Object, HashMap<K,T>> mEventPool = new ConcurrentHashMap<>();
+
+    private final ConcurrentHashMap<Object, HashMap<K,T>> mEventPool = new ConcurrentHashMap<>();
 
 
     private EventPool(){
@@ -62,9 +63,11 @@ public class EventPool<T extends EventFragment,K extends Class<EventObject>>{
     public void recycle(Object o){
         HashMap<K,T> map = mEventPool.get(o);
         for(K fragment : map.keySet()){
-            map.remove(fragment);
+            T f = map.remove(fragment);
+            f = null;
         }
 
         mEventPool.remove(o);
+        o = null;
     }
 }

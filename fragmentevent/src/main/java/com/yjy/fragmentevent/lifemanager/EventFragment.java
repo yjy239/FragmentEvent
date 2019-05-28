@@ -65,5 +65,6 @@ public class EventFragment implements LifecycleListener{
     @Override
     public void onDestroy() {
         isDestroy = true;
+        mContext = null;
     }
 }

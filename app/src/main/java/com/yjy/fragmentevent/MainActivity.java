@@ -1,5 +1,6 @@
 package com.yjy.fragmentevent;
 
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -7,7 +8,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
-import com.yjy.eventbustest.index;
 import com.yjy.fragmentevent.Activity.AppEvent;
 import com.yjy.fragmentevent.Activity.TestFragment;
 import com.yjy.fragmentevent.Activity.WxEvent;
@@ -16,7 +16,6 @@ import com.yjy.fragmentevent.app.WholeAppEvent;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-
 
 public class MainActivity extends AppCompatActivity {
 
