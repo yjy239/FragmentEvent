@@ -13,7 +13,7 @@ we must init FragmentEvent at First(Or before use EventBus)
 Firstly,project depends FragmentEvent
 ```
 dependencies {
-	        implementation 'com.github.yjy239:FragmentEvent:0.1'
+	        implementation 'com.github.yjy239:FragmentEvent:0.2-alpha'
 	}
 ```
 
