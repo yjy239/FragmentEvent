@@ -21,7 +21,7 @@ import org.greenrobot.eventbus.EventBus;
 public class FragmentEvent {
 
 
-    private final  EventLifeManager mManager;
+    private  EventLifeManager mManager;
 
 
     private volatile static FragmentEventBuilder BUILDER = builder().addIndex(new GenericSubscriberInfoIndex());
@@ -29,12 +29,17 @@ public class FragmentEvent {
 
 
     FragmentEvent(){
-        mManager = new EventLifeManager();
+        if(mManager == null){
+            mManager = new EventLifeManager();
+        }
     }
 
 
     FragmentEvent(FragmentEventBuilder builder){
-        mManager = new EventLifeManager();
+        if(mManager == null){
+            mManager = new EventLifeManager();
+        }
+
         builder.installDefaultEventBus();
 
     }
