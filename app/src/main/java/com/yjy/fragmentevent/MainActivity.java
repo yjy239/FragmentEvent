@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import com.yjy.eventbustest.index;
 import com.yjy.fragmentevent.Activity.AppEvent;
 import com.yjy.fragmentevent.Activity.TestFragment;
 import com.yjy.fragmentevent.Activity.WxEvent;
@@ -23,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-       //FragmentEvent.builder().addIndex(new index()).installDefaultEventBus();
+
         TestFragment handler = FragmentEvent.getDefault().register(this, WxEvent.class);
         FragmentEvent.getDefault().register(this, WxEvent.class);
         EventBus.getDefault().register(this);

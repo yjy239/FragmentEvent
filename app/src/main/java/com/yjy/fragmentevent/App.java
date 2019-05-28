@@ -23,6 +23,10 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        //       FragmentEvent.builder().addIndex(new index())
+//               .eventInheritance(false)
+//               .ignoreGeneratedIndex(true)
+//               .installDefaultEventBus();
         FragmentEvent.getDefault().register(this, WholeAppEvent.class);
         WholeAppEvent e = new WholeAppEvent();
         e.setCode(3);
