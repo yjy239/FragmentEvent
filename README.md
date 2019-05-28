@@ -1,10 +1,19 @@
 # FragmentEvent
 A EventBus Tools:it can constrain event in a Fragment（一个EventBus工具，能够约束信号在一个片层中）
 
+[![](https://jitpack.io/v/yjy239/FragmentEvent.svg)](https://jitpack.io/#yjy239/FragmentEvent)
+
 # How To Use It
 we must init FragmentEvent at First(Or before use EventBus)
 
 # Two Step for FragmentEvent
+
+Firstly,project depends FragmentEvent
+```
+dependencies {
+	        implementation 'com.github.yjy239:FragmentEvent:0.1'
+	}
+```
 
 ## 1.Create Two character for FragmentEvent
 
