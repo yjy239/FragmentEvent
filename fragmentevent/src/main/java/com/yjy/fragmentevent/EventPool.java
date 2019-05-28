@@ -1,7 +1,5 @@
 package com.yjy.fragmentevent;
 
-import android.annotation.SuppressLint;
-
 import com.yjy.fragmentevent.lifemanager.EventFragment;
 
 import java.util.HashMap;
@@ -18,7 +16,7 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class EventPool<T extends EventFragment,K extends Class<EventObject>>{
 
-    private final ConcurrentHashMap<Object, HashMap<K,T>> mEventPool = new ConcurrentHashMap<>();
+    private final ConcurrentHashMap<Object, ConcurrentHashMap<K,T>> mEventPool = new ConcurrentHashMap<>();
 
 
     private EventPool(){
@@ -35,39 +33,41 @@ public class EventPool<T extends EventFragment,K extends Class<EventObject>>{
     }
 
     public void put(Object o,K event, T eventFragment){
-        HashMap<K,T> map = getMap(o,event);
+        ConcurrentHashMap<K,T> map = getMap(o,event);
         map.put(event,eventFragment);
         mEventPool.put(o,map);
     }
 
-    private HashMap<K,T> getMap(Object o,K event){
-        HashMap<K,T> map = mEventPool.get(o);
+    private ConcurrentHashMap<K,T> getMap(Object o,K event){
+        ConcurrentHashMap<K,T> map = mEventPool.get(o);
         if(map == null){
-            map = new HashMap<>();
+            map = new ConcurrentHashMap<>();
         }
         return map;
     }
 
 
    public T get(Object o,K event){
-       HashMap<K,T> map = getMap(o,event);
+       ConcurrentHashMap<K,T> map = getMap(o,event);
        return map.get(event);
    }
 
 
    public void recycle(Object o,K event){
-       HashMap<K,T> map = getMap(o,event);
+       ConcurrentHashMap<K,T> map = getMap(o,event);
        map.remove(event);
    }
 
+   // for handle java.util.ConcurrentModificationException
     public void recycle(Object o){
-        HashMap<K,T> map = mEventPool.get(o);
-        for(K fragment : map.keySet()){
-            T f = map.remove(fragment);
-            f = null;
+        synchronized (EventPool.class){
+            ConcurrentHashMap<K,T> map = mEventPool.get(o);
+            for(K fragment : map.keySet()){
+                map.remove(fragment);
+            }
+
+            mEventPool.remove(o);
         }
 
-        mEventPool.remove(o);
-        o = null;
     }
 }
