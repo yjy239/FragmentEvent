@@ -64,6 +64,7 @@ public class Utils {
             return (Class<T>) result;
 
         }catch (Exception e){
+            e.printStackTrace();
             throw new IllegalArgumentException(event.getName()+"实例异常,继承EventObject必须包含无参构造函数");
 
         }
@@ -81,6 +82,7 @@ public class Utils {
             Constructor constructor = eventHandlerClass.getConstructor(Context.class,Lifecycle.class);
             fragment = (T) constructor.newInstance(context,lifecycle);
         }catch (Exception e){
+            e.printStackTrace();
             throw new IllegalArgumentException(eventHandlerClass.getName()+"必须为EventObject指定泛型以及为BaseEventFragment指定泛型");
         }
 
