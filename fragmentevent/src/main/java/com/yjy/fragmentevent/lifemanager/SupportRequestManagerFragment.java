@@ -110,8 +110,6 @@ public class SupportRequestManagerFragment extends Fragment {
 
   private void registerFragmentWithRoot(@NonNull FragmentActivity activity) {
     unregisterFragmentWithRoot();
-//    rootRequestManagerFragment =
-//        Glide.get(activity).getRequestManagerRetriever().getSupportRequestManagerFragment(activity);
     rootRequestManagerFragment =
             FragmentEvent.getDefault().getLifeManager().getSupportRequestManagerFragment(activity);
     if (!equals(rootRequestManagerFragment)) {

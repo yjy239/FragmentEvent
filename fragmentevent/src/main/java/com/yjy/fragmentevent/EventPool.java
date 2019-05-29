@@ -2,7 +2,6 @@ package com.yjy.fragmentevent;
 
 import com.yjy.fragmentevent.lifemanager.EventFragment;
 
-import java.util.HashMap;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -58,16 +57,21 @@ public class EventPool<T extends EventFragment,K extends Class<EventObject>>{
        map.remove(event);
    }
 
-   // for handle java.util.ConcurrentModificationException
-    public void recycle(Object o){
-        synchronized (EventPool.class){
-            ConcurrentHashMap<K,T> map = mEventPool.get(o);
-            for(K fragment : map.keySet()){
-                map.remove(fragment);
-            }
 
+    public void recycle(Object o){
+        ConcurrentHashMap<K,T> map = mEventPool.get(o);
+        if(map != null){
+            for(K fragment : map.keySet()){
+                if(fragment != null){
+                    T f = map.remove(fragment);
+                    f = null;
+                }
+
+            }
             mEventPool.remove(o);
+            map = null;
         }
+
 
     }
 }
