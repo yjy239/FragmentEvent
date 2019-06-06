@@ -69,7 +69,6 @@ public class EventPool<T extends EventFragment,K extends Class<EventObject>>{
 
             }
             mEventPool.remove(o);
-            map = null;
         }
 
 

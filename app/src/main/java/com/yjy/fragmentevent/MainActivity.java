@@ -34,11 +34,12 @@ public class MainActivity extends AppCompatActivity {
 
         Button tv = findViewById(R.id.tv);
         Button tv2 = findViewById(R.id.tv1);
+        Button tv3 = findViewById(R.id.tv2);
         tv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 EventBus.getDefault().post(e);
-                startActivity(new Intent(MainActivity.this,SecondActivity.class));
+
             }
         });
         tv2.setOnClickListener(new View.OnClickListener() {
@@ -47,6 +48,13 @@ public class MainActivity extends AppCompatActivity {
                 EventBus.getDefault().post(new AppEvent());
             }
         });
+        tv3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this,SecondActivity.class));
+            }
+        });
+
 
 
         EventBus.getDefault().post(new WxEvent(10));
