@@ -17,6 +17,15 @@ dependencies {
 	}
 ```
 
+In proguard-rules.pro:
+```
+-keep class com.yjy.fragmentevent.info.**{*;}
+-keepclassmembers class * extends com.yjy.fragmentevent.BaseEventFragment{
+ public <init>(android.content.Context,com.yjy.fragmentevent.lifemanager.Lifecycle);
+}
+```
+
+
 ## 1.Create Two character for FragmentEvent
 
 ### 1.EventObject
