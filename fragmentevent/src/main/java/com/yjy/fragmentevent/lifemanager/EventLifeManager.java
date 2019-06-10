@@ -37,7 +37,7 @@ import java.util.Map;
  */
 public class EventLifeManager implements Handler.Callback{
     @VisibleForTesting
-    static final String FRAGMENT_TAG = "com.bumptech.glide.manager";
+    static final String FRAGMENT_TAG = "com.yjy.life.manager";
     private static final String TAG = "RMRetriever";
 
     private static final int ID_REMOVE_FRAGMENT_MANAGER = 1;
@@ -198,7 +198,6 @@ public class EventLifeManager implements Handler.Callback{
             current = pendingRequestManagerFragments.get(fm);
             if (current == null) {
                 current = new RequestManagerFragment();
-                current.setParentFragmentHint(parentHint);
                 if (isParentVisible) {
                     current.getLifeCycle().onStart();
                 }
@@ -250,7 +249,6 @@ public class EventLifeManager implements Handler.Callback{
             current = pendingSupportRequestManagerFragments.get(fm);
             if (current == null) {
                 current = new SupportRequestManagerFragment();
-                current.setParentFragmentHint(parentHint);
                 if (isParentVisible) {
                     current.getLifeCycle().onStart();
                 }

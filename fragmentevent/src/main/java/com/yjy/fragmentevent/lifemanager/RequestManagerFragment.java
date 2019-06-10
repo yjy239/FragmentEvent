@@ -64,32 +64,7 @@ public class RequestManagerFragment extends Fragment {
     childRequestManagerFragments.remove(child);
   }
 
-  /**
-   * Returns the set of fragments that this RequestManagerFragment's parent is a parent to. (i.e.
-   * our parent is the fragment that we are annotating).
-   */
-  @SuppressWarnings("deprecation")
-  @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
-  @NonNull
-  Set<RequestManagerFragment> getDescendantRequestManagerFragments() {
-    if (equals(rootRequestManagerFragment)) {
-      return Collections.unmodifiableSet(childRequestManagerFragments);
-    } else if (rootRequestManagerFragment == null
-        || Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR1) {
-      // Pre JB MR1 doesn't allow us to get the parent fragment so we can't introspect hierarchy,
-      // so just return an empty set.
-      return Collections.emptySet();
-    } else {
-      Set<RequestManagerFragment> descendants = new HashSet<>();
-      for (RequestManagerFragment fragment : rootRequestManagerFragment
-          .getDescendantRequestManagerFragments()) {
-        if (isDescendant(fragment.getParentFragment())) {
-          descendants.add(fragment);
-        }
-      }
-      return Collections.unmodifiableSet(descendants);
-    }
-  }
+
 
   /**
    * Sets a hint for which fragment is our parent which allows the fragment to return correct
@@ -114,21 +89,7 @@ public class RequestManagerFragment extends Fragment {
     return fragment != null ? fragment : parentFragmentHint;
   }
 
-  /**
-   * Returns true if the fragment is a descendant of our parent.
-   */
-  @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
-  private boolean isDescendant(@NonNull Fragment fragment) {
-    Fragment root = getParentFragment();
-    Fragment parentFragment;
-    while ((parentFragment = fragment.getParentFragment()) != null) {
-      if (parentFragment.equals(root)) {
-        return true;
-      }
-      fragment = fragment.getParentFragment();
-    }
-    return false;
-  }
+
 
   @SuppressWarnings("deprecation")
   private void registerFragmentWithRoot(@NonNull Activity activity) {

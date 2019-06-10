@@ -54,27 +54,6 @@ public class SupportRequestManagerFragment extends Fragment {
     childRequestManagerFragments.remove(child);
   }
 
-  /**
-   * Returns the set of fragments that this RequestManagerFragment's parent is a parent to. (i.e.
-   * our parent is the fragment that we are annotating).
-   */
-  @NonNull
-  Set<SupportRequestManagerFragment> getDescendantRequestManagerFragments() {
-    if (rootRequestManagerFragment == null) {
-      return Collections.emptySet();
-    } else if (equals(rootRequestManagerFragment)) {
-      return Collections.unmodifiableSet(childRequestManagerFragments);
-    } else {
-      Set<SupportRequestManagerFragment> descendants = new HashSet<>();
-      for (SupportRequestManagerFragment fragment : rootRequestManagerFragment
-          .getDescendantRequestManagerFragments()) {
-        if (isDescendant(fragment.getParentFragmentUsingHint())) {
-          descendants.add(fragment);
-        }
-      }
-      return Collections.unmodifiableSet(descendants);
-    }
-  }
 
   /**
    * Sets a hint for which fragment is our parent which allows the fragment to return correct
@@ -93,20 +72,6 @@ public class SupportRequestManagerFragment extends Fragment {
     return fragment != null ? fragment : parentFragmentHint;
   }
 
-  /**
-   * Returns true if the fragment is a descendant of our parent.
-   */
-  private boolean isDescendant(@NonNull Fragment fragment) {
-    Fragment root = getParentFragmentUsingHint();
-    Fragment parentFragment;
-    while ((parentFragment = fragment.getParentFragment()) != null) {
-      if (parentFragment.equals(root)) {
-        return true;
-      }
-      fragment = fragment.getParentFragment();
-    }
-    return false;
-  }
 
   private void registerFragmentWithRoot(@NonNull FragmentActivity activity) {
     unregisterFragmentWithRoot();
