@@ -73,7 +73,7 @@ public class RequestManagerFragment extends Fragment {
   void setParentFragmentHint(@Nullable Fragment parentFragmentHint) {
     this.parentFragmentHint = parentFragmentHint;
     if (parentFragmentHint != null && parentFragmentHint.getActivity() != null) {
-      registerFragmentWithRoot(parentFragmentHint.getActivity());
+      //registerFragmentWithRoot(parentFragmentHint.getActivity());
     }
   }
 
@@ -90,31 +90,31 @@ public class RequestManagerFragment extends Fragment {
   }
 
 
-
-  @SuppressWarnings("deprecation")
-  private void registerFragmentWithRoot(@NonNull Activity activity) {
-    unregisterFragmentWithRoot();
-    //获取根部
-    rootRequestManagerFragment =
-            FragmentEvent.getDefault().getLifeManager().getRequestManagerFragment(activity);
-    if (!equals(rootRequestManagerFragment)) {
-      rootRequestManagerFragment.addChildRequestManagerFragment(this);
-    }
-  }
-
-  private void unregisterFragmentWithRoot() {
-    if (rootRequestManagerFragment != null) {
-      rootRequestManagerFragment.removeChildRequestManagerFragment(this);
-      rootRequestManagerFragment = null;
-    }
-  }
+//
+//  @SuppressWarnings("deprecation")
+//  private void registerFragmentWithRoot(@NonNull Activity activity) {
+//    unregisterFragmentWithRoot();
+//    //获取根部
+//    rootRequestManagerFragment =
+//            FragmentEvent.getDefault().getLifeManager().getRequestManagerFragment(activity);
+//    if (!equals(rootRequestManagerFragment)) {
+//      rootRequestManagerFragment.addChildRequestManagerFragment(this);
+//    }
+//  }
+//
+//  private void unregisterFragmentWithRoot() {
+//    if (rootRequestManagerFragment != null) {
+//      rootRequestManagerFragment.removeChildRequestManagerFragment(this);
+//      rootRequestManagerFragment = null;
+//    }
+//  }
 
   @SuppressWarnings("deprecation")
   @Override
   public void onAttach(Activity activity) {
     super.onAttach(activity);
     try {
-      registerFragmentWithRoot(activity);
+      //registerFragmentWithRoot(activity);
     } catch (IllegalStateException e) {
       // OnAttach can be called after the activity is destroyed, see #497.
       if (Log.isLoggable(TAG, Log.WARN)) {
@@ -126,7 +126,7 @@ public class RequestManagerFragment extends Fragment {
   @Override
   public void onDetach() {
     super.onDetach();
-    unregisterFragmentWithRoot();
+    //unregisterFragmentWithRoot();
   }
 
   @Override
@@ -145,7 +145,7 @@ public class RequestManagerFragment extends Fragment {
   public void onDestroy() {
     super.onDestroy();
     lifecycle.onDestroy();
-    unregisterFragmentWithRoot();
+    //unregisterFragmentWithRoot();
 
     //清空EventPool的数据
     EventPool.getInstance().recycle(this);

@@ -62,7 +62,7 @@ public class SupportRequestManagerFragment extends Fragment {
   void setParentFragmentHint(@Nullable Fragment parentFragmentHint) {
     this.parentFragmentHint = parentFragmentHint;
     if (parentFragmentHint != null && parentFragmentHint.getActivity() != null) {
-      registerFragmentWithRoot(parentFragmentHint.getActivity());
+     // registerFragmentWithRoot(parentFragmentHint.getActivity());
     }
   }
 
@@ -73,27 +73,27 @@ public class SupportRequestManagerFragment extends Fragment {
   }
 
 
-  private void registerFragmentWithRoot(@NonNull FragmentActivity activity) {
-    unregisterFragmentWithRoot();
-    rootRequestManagerFragment =
-            FragmentEvent.getDefault().getLifeManager().getSupportRequestManagerFragment(activity);
-    if (!equals(rootRequestManagerFragment)) {
-      rootRequestManagerFragment.addChildRequestManagerFragment(this);
-    }
-  }
+//  private void registerFragmentWithRoot(@NonNull FragmentActivity activity) {
+//    unregisterFragmentWithRoot();
+//    rootRequestManagerFragment =
+//            FragmentEvent.getDefault().getLifeManager().getSupportRequestManagerFragment(activity);
+//    if (!equals(rootRequestManagerFragment)) {
+//      rootRequestManagerFragment.addChildRequestManagerFragment(this);
+//    }
+//  }
 
-  private void unregisterFragmentWithRoot() {
-    if (rootRequestManagerFragment != null) {
-      rootRequestManagerFragment.removeChildRequestManagerFragment(this);
-      rootRequestManagerFragment = null;
-    }
-  }
+//  private void unregisterFragmentWithRoot() {
+//    if (rootRequestManagerFragment != null) {
+//      rootRequestManagerFragment.removeChildRequestManagerFragment(this);
+//      rootRequestManagerFragment = null;
+//    }
+//  }
 
   @Override
   public void onAttach(Context context) {
     super.onAttach(context);
     try {
-      registerFragmentWithRoot(getActivity());
+     // registerFragmentWithRoot(getActivity());
     } catch (IllegalStateException e) {
       // OnAttach can be called after the activity is destroyed, see #497.
       if (Log.isLoggable(TAG, Log.WARN)) {
@@ -106,7 +106,7 @@ public class SupportRequestManagerFragment extends Fragment {
   public void onDetach() {
     super.onDetach();
     parentFragmentHint = null;
-    unregisterFragmentWithRoot();
+    //unregisterFragmentWithRoot();
   }
 
   @Override
@@ -125,7 +125,7 @@ public class SupportRequestManagerFragment extends Fragment {
   public void onDestroy() {
     super.onDestroy();
     lifecycle.onDestroy();
-    unregisterFragmentWithRoot();
+    //unregisterFragmentWithRoot();
 
     //清空EventPool的数据
     EventPool.getInstance().recycle(this);
